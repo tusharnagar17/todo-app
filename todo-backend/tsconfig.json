@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "module": "CommonJS",
+    // "moduleResolution": "Bundler",
     "strict": true,
     "skipLibCheck": true,
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
+    "outDir": "./build",
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
-  }
+    "rootDir": "./src",
+    "allowSyntheticDefaultImports": true // Add this line
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

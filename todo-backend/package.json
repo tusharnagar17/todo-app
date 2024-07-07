@@ -2,6 +2,9 @@
   "name": ".",
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "tsc": "tsc",
+    "start": "node build/index.js",
+    "build": "tsc",
     "generate": "drizzle-kit generate",
     "migrate": "tsx ./src/migration.ts"
   },
