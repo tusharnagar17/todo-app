@@ -36,20 +36,34 @@ api.post("/", async (c) => {
 // PUT todo
 api.put("/:id", async (c) => {
   const id = c.req.param("id");
-  const data = await c.req.json();
-  console.log("update request data", data);
   try {
+    // Fetch the current todo item by id
+    const currentTodo = await db
+      .select()
+      .from(todoTable)
+      .where(eq(todoTable.id, Number(id)))
+      .then((results) => results[0]);
+
+    if (!currentTodo) {
+      c.status(404); // Set status here
+      return c.json({ message: "Todo item not found!" });
+    }
+
+    // Toggle the 'status' field
+    const updatedStatus = !currentTodo.status;
+
+    // Update the 'status' field for the todo item
     const response = await db
       .update(todoTable)
-      .set(data)
+      .set({ status: updatedStatus })
       .where(eq(todoTable.id, Number(id)));
 
-    c.status(200);
-    return c.json({ message: "Successfully updated!" });
+    c.status(200); // Set status here
+    return c.json({ message: "Successfully toggled 'status'!" });
   } catch (error: any) {
     console.log(error);
-    c.status(500);
-    return c.json({ message: `Unable to update request: ${error.message}` });
+    c.status(500); // Set status here
+    return c.json({ message: `Unable to toggle 'status': ${error.message}` });
   }
 });
 
